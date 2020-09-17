@@ -20,13 +20,12 @@ class _SearchScreenState extends State<SearchScreen> {
         shrinkWrap: true,
         itemCount: result.length,
         itemBuilder: (context, index) {
-          return GestureDetector(
+          return (result[index]['kind'] == 'song')? GestureDetector(
             behavior: HitTestBehavior.translucent,
             onTap: () async {
-              print('click');
               NetworkHelper net = NetworkHelper(
                   url:
-                      "https://itunes.apple.com/lookup?id=${result[index]['trackId']}");
+                  "https://itunes.apple.com/lookup?id=${result[index]['trackId']}");
               String track = await net.getTrack();
               // getting the track
               setState(() {
@@ -48,7 +47,7 @@ class _SearchScreenState extends State<SearchScreen> {
               dense: false,
               subtitle: Text(result[index]['artistName']),
             ),
-          );
+          ) : Text("");
         });
   }
 
@@ -88,10 +87,11 @@ class _SearchScreenState extends State<SearchScreen> {
               onPressed: () async {
                 NetworkHelper net = NetworkHelper(
                     url:
-                        "https://itunes.apple.com/search?term=$searched&limit=10");
+                    "https://itunes.apple.com/search?term=$searched&limit=10");
                 var temp = await net.getData();
                 setState(() {
                   result = temp;
+                  print(result);
                 });
                 _controller.clear();
               },
@@ -103,7 +103,7 @@ class _SearchScreenState extends State<SearchScreen> {
               onPressed: () async {
                 NetworkHelper net = NetworkHelper(
                     url:
-                        "http://api.shoutcast.com/station/nowplaying?ct=rihanna&f=json&k=qKAe6Vw5lR8EZNbn");
+                    "http://api.shoutcast.com/station/nowplaying?ct=rihanna&f=json&k=qKAe6Vw5lR8EZNbn");
                 var temp = await net.getTopRadio();
 //                print(temp);
                 net.track();
@@ -136,3 +136,7 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 }
 //"http://206.190.135.28:8332/stream"
+//http://janus.cdnstream.com:5598/stream2
+//http://api.shoutcast.com/legacy/Top500?k=qKAe6Vw5lR8EZNbn
+//http://api.shoutcast.com/legacy/Top500?k=qKAe6Vw5lR8EZNbn&search=hindi
+//http://yp.shoutcast.com/sbin/tunein-station.m3u?id=1858790
