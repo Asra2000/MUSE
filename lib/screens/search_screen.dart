@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../services/networking.dart';
 import 'package:music_player/music_player.dart';
+import '../services/bottomNavBar.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -132,9 +133,15 @@ class _SearchScreenState extends State<SearchScreen> {
           ));
         },
       ),
+      bottomNavigationBar: BottomAppBar(
+        child: CustomBottomNavBar(),
+      ),
     );
   }
 }
+
+
+
 //"http://206.190.135.28:8332/stream"
 //http://janus.cdnstream.com:5598/stream2
 //http://api.shoutcast.com/legacy/Top500?k=qKAe6Vw5lR8EZNbn
