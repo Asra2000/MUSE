@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:musa/screens/player_screen.dart';
 import 'package:music_player/music_player.dart';
 import '../services/constants.dart';
 import '../services/songs.dart';
@@ -43,6 +44,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     setState(() {
                       trackUrl = track;
                     });
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => PlayerScreen(imageUrl: result[index]['artworkUrl60'],)),);
                   },
                   child: Card(
                     elevation: 0,

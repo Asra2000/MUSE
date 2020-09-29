@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flare_splash_screen/flare_splash_screen.dart';
+import './screens/player_screen.dart';
 import './screens/search_screen.dart';
 
 void main() => runApp(MyApp());
@@ -21,6 +22,10 @@ class MyApp extends StatelessWidget {
           Image.asset("assets/back.png",height: 400.0,)
         ],
       ),
+      routes: {
+        '/search' :(context) => SearchScreen(),
+        '/player' : (context) => PlayerScreen(),
+      },
     );
   }
 }
