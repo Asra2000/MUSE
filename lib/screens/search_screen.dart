@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import '../services/networking.dart';
 import 'package:music_player/music_player.dart';
+import '../services/constants.dart';
+import '../services/songs.dart';
+import '../services/networking.dart';
 import '../services/bottomNavBar.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -14,41 +16,74 @@ class _SearchScreenState extends State<SearchScreen> {
   List result;
   TextEditingController _controller = TextEditingController();
   MusicPlayer musicPlayer;
+  List<Song> songs = [];
 
   Widget showResult() {
     return ListView.builder(
+        padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10.0),
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         itemCount: result.length,
         itemBuilder: (context, index) {
-          return (result[index]['kind'] == 'song')? GestureDetector(
-            behavior: HitTestBehavior.translucent,
-            onTap: () async {
-              NetworkHelper net = NetworkHelper(
-                  url:
-                  "https://itunes.apple.com/lookup?id=${result[index]['trackId']}");
-              String track = await net.getTrack();
-              // getting the track
-              setState(() {
-                trackUrl = track;
-              });
-            },
-            child: ListTile(
-              leading: Container(
-                width: 48,
-                height: 100,
-                padding: EdgeInsets.symmetric(vertical: 5.0),
-                alignment: Alignment.center,
-                child: CircleAvatar(
-                  radius: 50.0,
-                  backgroundImage: NetworkImage(result[index]['artworkUrl100']),
-                ),
-              ),
-              title: Text(result[index]['trackName']),
-              dense: false,
-              subtitle: Text(result[index]['artistName']),
-            ),
-          ) : Text("");
+          if(result[index]['kind'] == 'song')
+          songs.add(Song(
+              songUrl:
+                  "https://itunes.apple.com/lookup?id=${result[index]['trackId']}",
+              songName: result[index]['trackName'],
+              artist: result[index]['artistName']));
+          return (result[index]['kind'] == 'song')
+              ? GestureDetector(
+                  behavior: HitTestBehavior.translucent,
+                  onTap: () async {
+                    NetworkHelper net = NetworkHelper(
+                        url:
+                            "https://itunes.apple.com/lookup?id=${result[index]['trackId']}");
+                    String track = await net.getTrack();
+                    // getting the track
+                    setState(() {
+                      trackUrl = track;
+                    });
+                  },
+                  child: Card(
+                    elevation: 0,
+                    shape: StadiumBorder(
+                      side: BorderSide(
+                        color: pale,
+                        width: 1.0,
+                      ),
+                    ),
+                    child: ListTile(
+                      leading: Container(
+                        width: 48,
+                        height: 100,
+                        padding: EdgeInsets.symmetric(vertical: 5.0),
+                        alignment: Alignment.center,
+                        child: CircleAvatar(
+                          radius: 50.0,
+                          backgroundImage:
+                              NetworkImage(result[index]['artworkUrl100']),
+                        ),
+                      ),
+                      title: Text(result[index]['trackName']),
+                      dense: false,
+                      subtitle: Text(result[index]['artistName']),
+                      trailing: IconButton(
+                        icon: Icon(
+                          songs[index].liked
+                              ? Icons.favorite
+                              : Icons.favorite_border,
+                          color: Colors.red,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            songs[index].liked = !songs[index].liked;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                )
+              : Text("");
         });
   }
 
@@ -65,6 +100,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           children: [
@@ -72,9 +108,14 @@ class _SearchScreenState extends State<SearchScreen> {
               controller: _controller,
               decoration: InputDecoration(
                   filled: true,
+                  fillColor: Colors.white70,
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: blackPink,
+                  ),
                   hintText: 'Enter song/artist/albums',
                   hintStyle: TextStyle(
-                    color: Colors.yellow[100],
+                    color: brickRed,
                   ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -88,11 +129,10 @@ class _SearchScreenState extends State<SearchScreen> {
               onPressed: () async {
                 NetworkHelper net = NetworkHelper(
                     url:
-                    "https://itunes.apple.com/search?term=$searched&limit=10");
+                        "https://itunes.apple.com/search?term=$searched&limit=10");
                 var temp = await net.getData();
                 setState(() {
                   result = temp;
-                  print(result);
                 });
                 _controller.clear();
               },
@@ -104,9 +144,8 @@ class _SearchScreenState extends State<SearchScreen> {
               onPressed: () async {
                 NetworkHelper net = NetworkHelper(
                     url:
-                    "http://api.shoutcast.com/station/nowplaying?ct=rihanna&f=json&k=qKAe6Vw5lR8EZNbn");
+                        "http://api.shoutcast.com/station/nowplaying?ct=rihanna&f=json&k=qKAe6Vw5lR8EZNbn");
                 var temp = await net.getTopRadio();
-//                print(temp);
                 net.track();
               },
               child: Text(
@@ -139,8 +178,6 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 }
-
-
 
 //"http://206.190.135.28:8332/stream"
 //http://janus.cdnstream.com:5598/stream2
