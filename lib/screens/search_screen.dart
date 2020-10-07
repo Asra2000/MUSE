@@ -198,17 +198,7 @@ class _SearchScreenState extends State<SearchScreen> {
           ]
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          musicPlayer.play(MusicItem(
-            trackName: 'Sample',
-            albumName: 'Sample Album',
-            artistName: 'Sample Artist',
-            url: trackUrl,
-            duration: Duration(seconds: 30),
-          ));
-        },
-      ),
+
       bottomNavigationBar: BottomAppBar(
         child: CustomBottomNavBar(),
       ),

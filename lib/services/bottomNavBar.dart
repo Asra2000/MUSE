@@ -18,7 +18,7 @@ class CustomBottomNavBar extends StatelessWidget {
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [Colors.orange[500], pale],
+                    colors: [peach.withAlpha(255), pale],
                   )
               ),
               child: Row(
