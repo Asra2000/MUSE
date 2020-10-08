@@ -24,7 +24,7 @@ class CustomBottomNavBar extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  IconButton(icon: Icon(Icons.home, color: Colors.white,), onPressed: (){},),
+                  IconButton(icon: Icon(Icons.home, color: Colors.white,), onPressed: (){Navigator.popAndPushNamed(context, '/home');},),
                   IconButton(icon: Icon(Icons.search, color: Colors.white), onPressed: (){
                     Navigator.popAndPushNamed(context, '/search');
                   },),

@@ -3,14 +3,35 @@ import 'package:flutter/material.dart';
 import '../services/bottomNavBar.dart';
 import '../services/constants.dart';
 import 'package:music_player/music_player.dart';
+import 'package:flutter_radio/flutter_radio.dart';
 
 
-class PlayerScreen extends StatelessWidget {
+
+class PlayerScreen extends StatefulWidget {
   final String imageUrl;
   final String trackUrl;
-  final MusicPlayer musicPlayer =  MusicPlayer();
+  final bool isRadio;
 
-  PlayerScreen({this.imageUrl, this.trackUrl});
+  PlayerScreen({this.imageUrl, this.trackUrl, this.isRadio = false});
+
+  @override
+  _PlayerScreenState createState() => _PlayerScreenState();
+}
+
+class _PlayerScreenState extends State<PlayerScreen> {
+  MusicPlayer musicPlayer =  MusicPlayer();
+  bool isRadioPlaying = false;
+
+  @override
+  void initState() {
+    super.initState();
+    audioStart();
+  }
+
+  Future<void> audioStart() async {
+    await FlutterRadio.audioStart();
+    print('Audio Start OK');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +43,8 @@ class PlayerScreen extends StatelessWidget {
             Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                image: this.imageUrl != null
-                    ? NetworkImage(this.imageUrl)
+                image: this.widget.imageUrl != null
+                    ? NetworkImage(this.widget.imageUrl)
                     : AssetImage('assets/seaside.jpg'),
                 colorFilter: ColorFilter.mode(pale, BlendMode.colorBurn),
                 fit: BoxFit.cover,
@@ -63,19 +84,25 @@ class PlayerScreen extends StatelessWidget {
                           ),
                         ),
                         onTap: () {
-                          if(trackUrl != null) {
-                            musicPlayer.play(MusicItem(
-                              trackName: 'Sample',
-                              albumName: 'Sample Album',
-                              artistName: 'Sample Artist',
-                              url: trackUrl,
-                              duration: Duration(seconds: 30),
-                            ));
+                          if(widget.trackUrl != null) {
+                            if (!widget.isRadio) {
+                              musicPlayer.play(MusicItem(
+                                trackName: 'Sample',
+                                albumName: 'Sample Album',
+                                artistName: 'Sample Artist',
+                                url: widget.trackUrl,
+                                duration: Duration(seconds: 30),
+                              ));
+                            }else{
+                              print("here " +  widget.trackUrl);
+                                FlutterRadio.play(url: widget.trackUrl);
+                            }
                           }
                         },
                       ),
                       GestureDetector(
                         onTap: (){
+                          widget.isRadio ? FlutterRadio.stop() :
                           musicPlayer.pause();
                         },
                           child: Icon(

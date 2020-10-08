@@ -17,6 +17,7 @@ dependencies:
   http: ^0.12.2
   music_player: ^0.1.5
   flare_splash_screen: ^3.0.1
+  flutter_radio: ^0.1.8
 
 dev_dependencies:
   flutter_test:

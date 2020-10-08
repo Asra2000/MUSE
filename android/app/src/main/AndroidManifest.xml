@@ -10,7 +10,8 @@
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="musa"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -45,6 +46,8 @@
         <service
             android:name="live.exit.musicplayer.MusicPlayerService"
             android:enabled="true" />
+
+
     </application>
 
 </manifest>

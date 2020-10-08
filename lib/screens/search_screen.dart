@@ -5,6 +5,7 @@ import '../services/constants.dart';
 import '../services/songs.dart';
 import '../services/networking.dart';
 import '../services/bottomNavBar.dart';
+import 'package:flutter_radio/flutter_radio.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -100,6 +101,11 @@ class _SearchScreenState extends State<SearchScreen> {
   void initState() {
     super.initState();
     initPlatformState();
+    audioStart();
+  }
+  Future<void> audioStart() async {
+    await FlutterRadio.audioStart();
+    print('Audio Start OK');
   }
 
   Future<void> initPlatformState() async {
@@ -175,18 +181,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   'Search',
                 ),
               ),
-              FlatButton(
-                onPressed: () async {
-                  NetworkHelper net = NetworkHelper(
-                      url:
-                          "http://api.shoutcast.com/station/nowplaying?ct=rihanna&f=json&k=qKAe6Vw5lR8EZNbn");
-                  var temp = await net.getTopRadio();
-                  net.track();
-                },
-                child: Text(
-                  'Radio',
-                ),
-              ),
+              
               SizedBox(
                 height: 150.0,
               ),
@@ -198,7 +193,6 @@ class _SearchScreenState extends State<SearchScreen> {
           ]
         ),
       ),
-
       bottomNavigationBar: BottomAppBar(
         child: CustomBottomNavBar(),
       ),
@@ -211,3 +205,9 @@ class _SearchScreenState extends State<SearchScreen> {
 //http://api.shoutcast.com/legacy/Top500?k=qKAe6Vw5lR8EZNbn
 //http://api.shoutcast.com/legacy/Top500?k=qKAe6Vw5lR8EZNbn&search=hindi
 //http://yp.shoutcast.com/sbin/tunein-station.m3u?id=1858790
+//"http://api.shoutcast.com/station/nowplaying?ct=rihanna&f=json&k=qKAe6Vw5lR8EZNbn"
+//NetworkHelper net = NetworkHelper(
+//    url:
+//    "http://api.shoutcast.com/station/nowplaying?ct=rihanna&f=json&k=qKAe6Vw5lR8EZNbn");
+//var temp = await net.getTopRadio();
+//temp = await net.track("99476756");

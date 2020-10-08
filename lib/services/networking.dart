@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 class NetworkHelper{
   String url;
-  NetworkHelper({this.url});
+  NetworkHelper({this.url = ""});
 
   Future<List> getData() async {
     http.Response response = await http.get(url);
@@ -34,9 +34,13 @@ class NetworkHelper{
     else
       return "";
   }
-  Future track()async{
-    http.Response response = await http.get("http://yp.shoutcast.com/sbin/tunein-station.m3u?id=99476756");
+  Future track(String id)async{
+    http.Response response = await http.get("http://yp.shoutcast.com/sbin/tunein-station.m3u?id=$id");
     String data = response.body;
-    print(data.substring(data.length-34));
+    print(data);
+//    print(data.substring(data.length-34));
+    if(data.length > 34)
+    return data.substring(data.length-34);
   }
 }
+//99476756
