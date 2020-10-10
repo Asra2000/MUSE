@@ -10,6 +10,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        canvasColor: Colors.transparent
+      ),
       title: 'Flare Welcome',
       debugShowCheckedModeBanner: true,
       home: Stack(

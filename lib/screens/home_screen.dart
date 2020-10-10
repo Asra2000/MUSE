@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import '../services/constants.dart';
 import 'player_screen.dart';
 import '../services/networking.dart';
+import '../services/bottomNavBar.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: lightPinkColor,
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Stack(
@@ -17,7 +18,7 @@ class HomeScreen extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * 0.4,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: deepBlue,
                   borderRadius: BorderRadius.only(
                       bottomRight: Radius.circular(200.0),
                       bottomLeft: Radius.circular(5.0)),
@@ -31,18 +32,42 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     Text(
                       "WHAT EVER YOUR MOOD WE ARE HERE TO LIGHT IT UP",
-                      style: TextStyle(color: blackPink, fontSize: 20.0),
+                      style: TextStyle(color: Colors.white, fontSize: 20.0),
                     ),
                     SizedBox(
                       height: 60.0,
                     ),
                     Text(
                       "HERE ARE SOME TOP HITS",
-                      style: TextStyle(color: Colors.pink, fontSize: 20.0),
+                      style: TextStyle(color: lightPinkColor, fontSize: 20.0, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
                       height: 50.0,
                     ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        SongCards(id: "99476756",),
+                        SongCards(id: "99502558",),
+                      ],
+                    ),
+                    SizedBox(height: 15.0,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        SongCards(id: "99476756",),
+                        SongCards(id: "99502558",),
+                      ],
+                    ),
+                    SizedBox(height: 15.0,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        SongCards(id: "99476756",),
+                        SongCards(id: "99502558",),
+                      ],
+                    ),
+                    SizedBox(height: 15.0,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -56,6 +81,9 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: CustomBottomNavBar(),
       ),
     );
   }
@@ -71,7 +99,7 @@ class SongCards extends StatelessWidget {
       child: Container(
         width: 150.0,
         height: 150.0,
-        color: blackPink,
+        color: blackPink.withAlpha(150),
       ),
       onTap: () async {
         NetworkHelper net = NetworkHelper();

@@ -29,6 +29,7 @@ class NetworkHelper{
     if (response.statusCode == 200){
       String data = response.body;
       Map decodedData = jsonDecode(data);
+      print(decodedData);
       return decodedData;
     }
     else

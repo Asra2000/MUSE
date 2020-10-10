@@ -181,7 +181,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   'Search',
                 ),
               ),
-              
+
               SizedBox(
                 height: 150.0,
               ),
@@ -194,7 +194,7 @@ class _SearchScreenState extends State<SearchScreen> {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        child: CustomBottomNavBar(),
+        child: CustomBottomNavBar(backColor: lightPinkColor,),
       ),
     );
   }
