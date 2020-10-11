@@ -29,7 +29,7 @@ class NetworkHelper{
     if (response.statusCode == 200){
       String data = response.body;
       Map decodedData = jsonDecode(data);
-      print(decodedData);
+      print(decodedData['response']['data']['stationlist']['station']);
       return decodedData;
     }
     else
@@ -38,10 +38,14 @@ class NetworkHelper{
   Future track(String id)async{
     http.Response response = await http.get("http://yp.shoutcast.com/sbin/tunein-station.m3u?id=$id");
     String data = response.body;
-    print(data);
 //    print(data.substring(data.length-34));
-    if(data.length > 34)
-    return data.substring(data.length-34);
+    if(data.length > 34) {
+      data = data.substring(data.indexOf('http'));
+      data = data.substring(0, data.lastIndexOf('/')+1);
+      data += 'stream';
+      print(data);
+      return data;
+    }
   }
 }
 //99476756
