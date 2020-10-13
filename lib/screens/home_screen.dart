@@ -128,7 +128,6 @@ class SongCards extends StatelessWidget {
           MaterialPageRoute(
               builder: (context) => PlayerScreen(
                     trackUrl: temp,
-                    imageUrl: logo,
                     isRadio: true,
                   )),
         );

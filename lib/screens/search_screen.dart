@@ -49,7 +49,6 @@ class _SearchScreenState extends State<SearchScreen> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => PlayerScreen(
-                                imageUrl: result[index]['artworkUrl60'],
                                 trackUrl: trackUrl,
                               )),
                     );

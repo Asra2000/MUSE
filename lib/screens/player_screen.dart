@@ -8,11 +8,10 @@ import 'package:flutter_radio/flutter_radio.dart';
 
 
 class PlayerScreen extends StatefulWidget {
-  final String imageUrl;
   final String trackUrl;
   final bool isRadio;
 
-  PlayerScreen({this.imageUrl, this.trackUrl, this.isRadio = false});
+  PlayerScreen({this.trackUrl, this.isRadio = false});
 
   @override
   _PlayerScreenState createState() => _PlayerScreenState();
@@ -43,9 +42,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
             Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                image: this.widget.imageUrl != null
-                    ? NetworkImage(this.widget.imageUrl)
-                    : AssetImage('assets/seaside.jpg'),
+                image: !this.widget.isRadio
+                    ? AssetImage('assets/back.jpg')
+                    : AssetImage('assets/back1.jpg'),
                 colorFilter: ColorFilter.mode(pale, BlendMode.colorBurn),
                 fit: BoxFit.cover,
               ),
