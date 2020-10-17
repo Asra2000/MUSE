@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "274613491557",
+    "firebase_url": "https://musa-17067.firebaseio.com",
+    "project_id": "musa-17067",
+    "storage_bucket": "musa-17067.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:274613491557:android:5eb805ec021a765f6a738c",
+        "android_client_info": {
+          "package_name": "myapp.musa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "274613491557-k7vl71dlehf17ddq9r33n87nusuulkop.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAy6s3o36LVDOYdU4rpALLv7E4EGAa1MnM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "274613491557-k7vl71dlehf17ddq9r33n87nusuulkop.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
