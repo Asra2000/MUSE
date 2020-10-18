@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flare_splash_screen/flare_splash_screen.dart';
 import './screens/player_screen.dart';
 import './screens/search_screen.dart';
+import './screens/radio_home_screen.dart';
 import './screens/home_screen.dart';
 
 void main() => runApp(MyApp());
@@ -28,7 +29,8 @@ class MyApp extends StatelessWidget {
         ],
       ),
       routes: {
-        '/home': (context) => HomeScreen(),
+        '/home' : (context) => HomeScreen(),
+        '/radio': (context) => RadioScreen(),
         '/search' :(context) => SearchScreen(),
         '/player' : (context) => PlayerScreen(),
       },
