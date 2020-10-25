@@ -31,7 +31,7 @@ class CustomBottomNavBar extends StatelessWidget {
                     IconButton(icon: Icon(Icons.search, color: Colors.white), onPressed: (){
                       Navigator.popAndPushNamed(context, '/search');
                     },),
-                    IconButton(icon: Icon(Icons.playlist_play, color: Colors.white,), onPressed: (){},),
+                    IconButton(icon: Icon(Icons.radio, color: Colors.white,), onPressed: (){ Navigator.pushNamed(context, '/radio');},),
                     IconButton(icon: Icon(Icons.account_circle, color: Colors.white,), onPressed: (){},),
                   ],
                 ),

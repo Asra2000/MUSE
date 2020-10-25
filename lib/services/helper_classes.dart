@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../services/constants.dart';
 
 class BackgroundClipper extends CustomClipper<Path>{
   @override
@@ -71,3 +72,109 @@ class CustomContainers extends StatelessWidget {
     );
   }
 }
+
+/////////////////////////////////////////////////////////////////////////////////////
+class CardRows extends StatelessWidget {
+  final String image1Url, image2Url, text1, text2;
+
+  CardRows({this.image1Url, this.image2Url, this.text1, this.text2});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Expanded(
+          child: Container(
+            margin: EdgeInsets.only(bottom: 15.0),
+            height: 250.0,
+            child: SongCard(
+              imageUrl: image1Url,
+              captions: text1,
+              blurColor: grey,
+            ),
+          ),
+        ),
+        Expanded(
+          child: Container(
+            margin: EdgeInsets.only(bottom: 15.0),
+            height: 250.0,
+            child: SongCard(
+              blurColor: grey,
+              imageUrl: image2Url,
+              captions: text2,
+            ),
+          ),
+        )
+      ],
+    );
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+class SongCard extends StatelessWidget {
+  final String imageUrl;
+  final String text;
+  final Color blurColor;
+  final String captions;
+
+  SongCard(
+      {this.imageUrl,
+        this.text = "",
+        this.blurColor = rosePink,
+        this.captions = ""});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      child: Container(
+        margin: EdgeInsets.all(10.0),
+        width: 180.0,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          image:
+          DecorationImage(image: NetworkImage(imageUrl), fit: BoxFit.cover),
+          boxShadow: [
+            BoxShadow(
+              color: blurColor,
+              offset: Offset(5.0, 5.0),
+              blurRadius: 15.0,
+            ),
+          ],
+        ),
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                text,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Pacifico',
+                  fontWeight: FontWeight.w600,
+                  fontSize: 22,
+                  letterSpacing: 8,
+                  backgroundColor: blackPink.withOpacity(.2),
+                ),
+              ),
+              Text(
+                captions,
+                textAlign: TextAlign.end,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Pacifico',
+                  fontSize: 15.0,
+                  letterSpacing: 5,
+                  backgroundColor: blackPink.withOpacity(.2),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////

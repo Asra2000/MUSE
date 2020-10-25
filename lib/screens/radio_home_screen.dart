@@ -46,21 +46,14 @@ class RadioScreen extends StatelessWidget {
                     children: [
                       Text(
                         "Carry the radio wherever you go",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontStyle: FontStyle.italic,
-                            decoration: TextDecoration.underline,
-                            fontSize: 22.0),
+                        style: topHeadingStyle,
                       ),
                       SizedBox(
                         height: 60.0,
                       ),
                       Text(
                         "HERE ARE SOME TOP HITS",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold),
+                        style: headingStyle,
                       ),
                       SizedBox(
                         height: 50.0,
@@ -188,6 +181,7 @@ class RadioScreen extends StatelessWidget {
   }
 }
 
+////////////////////////////////////////////////////////////////////////////////
 class SongCards extends StatelessWidget {
   final String id;
   final String logo;
@@ -209,9 +203,9 @@ class SongCards extends StatelessWidget {
             boxShadow: [
               BoxShadow(
                   offset: const Offset(3.0, 3.0),
-                  blurRadius: 10.0,
-                  spreadRadius: 6.0,
-                  color: Colors.purple[400]),
+                  blurRadius: 15.0,
+                  spreadRadius: 10.0,
+                  color: Colors.white.withOpacity(0.6)),
             ]),
       ),
       onTap: () async {

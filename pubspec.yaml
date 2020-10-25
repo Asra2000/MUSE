@@ -37,3 +37,13 @@ flutter:
     - back.jpg
     - back1.jpg
     - headphone.jpg
+
+  fonts:
+    - family: KaushanScript
+      fonts:
+        - asset: fonts/KaushanScript-Regular.ttf
+    - family: Pacifico
+      fonts:
+        - asset: fonts/Pacifico-Regular.ttf
+
+
