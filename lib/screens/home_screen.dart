@@ -63,18 +63,22 @@ class HomeScreen extends StatelessWidget {
                   SongCard(
                     imageUrl: homeCardImageHindi,
                     text: "Hindi",
+                    searched: "hindi",
                   ),
                   SongCard(
                     imageUrl: homeCardImageEnglish,
                     text: "English",
+                    searched: "english",
                   ),
                   SongCard(
                     imageUrl: homeCardImageJazz,
                     text: "Jazz",
+                    searched: "jazz",
                   ),
                   SongCard(
                     imageUrl: homeCardImagePop,
                     text: "Pop",
+                    searched: "pop",
                   ),
                 ],
               ),

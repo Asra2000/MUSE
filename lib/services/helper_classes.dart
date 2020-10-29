@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import '../services/constants.dart';
+import '../services/networking.dart';
 
-class BackgroundClipper extends CustomClipper<Path>{
+class BackgroundClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     var roundnessFactor = 80.0;
@@ -20,11 +21,10 @@ class BackgroundClipper extends CustomClipper<Path>{
   bool shouldReclip(CustomClipper<Path> oldClipper) {
     return true;
   }
-
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-class BackgroundClipper1 extends CustomClipper<Path>{
+class BackgroundClipper1 extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     var roundnessFactor = 80.0;
@@ -43,7 +43,6 @@ class BackgroundClipper1 extends CustomClipper<Path>{
   bool shouldReclip(CustomClipper<Path> oldClipper) {
     return true;
   }
-
 }
 
 ///////////////////////////////////////////////////////////////////
@@ -75,9 +74,10 @@ class CustomContainers extends StatelessWidget {
 
 /////////////////////////////////////////////////////////////////////////////////////
 class CardRows extends StatelessWidget {
-  final String image1Url, image2Url, text1, text2;
+  final String image1Url, image2Url, text1, text2, searched; final bool isArtist;
 
-  CardRows({this.image1Url, this.image2Url, this.text1, this.text2});
+  CardRows(
+      {this.image1Url, this.image2Url, this.text1, this.text2, this.searched, this.isArtist = false});
 
   @override
   Widget build(BuildContext context) {
@@ -92,6 +92,8 @@ class CardRows extends StatelessWidget {
               imageUrl: image1Url,
               captions: text1,
               blurColor: grey,
+              searched: searched,
+              isArtist: isArtist,
             ),
           ),
         ),
@@ -103,6 +105,8 @@ class CardRows extends StatelessWidget {
               blurColor: grey,
               imageUrl: image2Url,
               captions: text2,
+              searched: searched,
+              isArtist: isArtist,
             ),
           ),
         )
@@ -117,23 +121,36 @@ class SongCard extends StatelessWidget {
   final String text;
   final Color blurColor;
   final String captions;
+  final String searched;
+  final bool isArtist;
 
   SongCard(
       {this.imageUrl,
-        this.text = "",
-        this.blurColor = rosePink,
-        this.captions = ""});
+      this.text = "",
+      this.blurColor = rosePink,
+      this.captions = "",
+      this.searched,
+      this.isArtist = false});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: () async {
+        print("here");
+        NetworkHelper net =  isArtist ? NetworkHelper(
+            url:
+                "https://itunes.apple.com/search?term=$searched&limit=10") :
+        NetworkHelper(url: "http://api.shoutcast.com/legacy/Top500?k=qKAe6Vw5lR8EZNbn&search=$searched");
+        var temp = isArtist ? await net.getData() : await net.getTopRadio();
+        print(temp);
+      },
       child: Container(
         margin: EdgeInsets.all(10.0),
         width: 180.0,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
           image:
-          DecorationImage(image: NetworkImage(imageUrl), fit: BoxFit.cover),
+              DecorationImage(image: NetworkImage(imageUrl), fit: BoxFit.cover),
           boxShadow: [
             BoxShadow(
               color: blurColor,

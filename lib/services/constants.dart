@@ -39,3 +39,10 @@ TextStyle topHeadingStyle = TextStyle(
   letterSpacing: 5,
   backgroundColor: blackPink.withOpacity(.2),
 );
+
+TextStyle headingStyleW =  TextStyle(
+    fontFamily: 'KaushanScript',
+    fontSize: 27.0,
+    fontStyle: FontStyle.italic,
+    color: Colors.white
+);

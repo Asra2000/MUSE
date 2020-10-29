@@ -4,10 +4,17 @@ import './screens/player_screen.dart';
 import './screens/search_screen.dart';
 import './screens/radio_home_screen.dart';
 import './screens/home_screen.dart';
+import './screens/signUp.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() => runApp(MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,7 +27,7 @@ class MyApp extends StatelessWidget {
         children: [
           SplashScreen.navigate(
             name: 'assets/splash.flr',
-            next: (context) => HomeScreen(),
+            next: (context) => RegistrationScreen(),
             startAnimation: 'enter',
             backgroundColor: Color(0xffffffff),
             until: () => Future.delayed(Duration(seconds: 6)),
