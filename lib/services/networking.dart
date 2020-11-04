@@ -26,9 +26,10 @@ class NetworkHelper{
   }
   Future getTopRadio()async{
     http.Response response = await http.get(url);
+    print(response.statusCode);
     if (response.statusCode == 200){
       String data = response.body;
-      Map decodedData = jsonDecode(data);
+       Map decodedData = jsonDecode(data);
       print(decodedData['response']['data']['stationlist']['station']);
       return decodedData;
     }

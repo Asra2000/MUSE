@@ -46,3 +46,9 @@ TextStyle headingStyleW =  TextStyle(
     fontStyle: FontStyle.italic,
     color: Colors.white
 );
+
+TextStyle redirectTextStyle =  TextStyle(
+    fontSize: 18.0,
+    fontStyle: FontStyle.italic,
+    color: pale
+);

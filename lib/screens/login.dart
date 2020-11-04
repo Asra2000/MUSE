@@ -1,25 +1,21 @@
 import 'package:flutter/material.dart';
-import '../services/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../services/constants.dart';
 import '../services/helper_classes.dart';
 
-class RegistrationScreen extends StatefulWidget {
+class LoginScreen extends StatefulWidget {
   @override
-  _RegistrationScreenState createState() => _RegistrationScreenState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _RegistrationScreenState extends State<RegistrationScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   final _auth = FirebaseAuth.instance;
-  bool loader = false;
   String email, password;
-  TextEditingController _controller1 = TextEditingController();
-  TextEditingController _controller2 = TextEditingController();
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Color(0xfffff5ea),
       body: SafeArea(
         child: Stack(children: [
           Positioned(
@@ -30,7 +26,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               height: 300.0,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: blackPink,
+                color: Color(0xff968c83),
               ),
             ),
           ),
@@ -42,7 +38,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               height: 500,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: brickRed,
+                color: Color(0xfff7dad9),
               ),
             ),
           ),
@@ -54,13 +50,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  "SIGN UP",
-                  style: headingStyleW,
+                  "LOGIN",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: 'KaushanScript',
+                      fontSize: 24.0),
                 ),
                 SizedBox(height: 30.0),
                 TextField(
                   keyboardType: TextInputType.emailAddress,
-                  controller: _controller1,
                   decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white70,
@@ -81,7 +79,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 ),
                 TextField(
                   keyboardType: TextInputType.visiblePassword,
-                  controller: _controller2,
                   obscureText: true,
                   decoration: InputDecoration(
                       filled: true,
@@ -102,15 +99,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   height: 20.0,
                 ),
                 RaisedButton(
-                  onPressed: () async{
+                  onPressed: () async {
                     try {
-                        final newUser = await _auth
-                            .createUserWithEmailAndPassword(
-                            email: email, password: password);
-                        if (newUser != null) {
-                          Navigator.pushReplacementNamed(context, '/home');
-                        }
-                    }catch(e){
+                      var loggedInUser = await _auth.signInWithEmailAndPassword(
+                          email: email, password: password);
+                      if (loggedInUser != null) {
+                        Navigator.pushReplacementNamed(context, '/home');
+                      }
+                    } catch (e) {
                       print(e);
                     }
                   },
@@ -118,12 +114,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   padding: const EdgeInsets.all(0.0),
                   child: BtnStyle(),
                 ),
-                SizedBox(height: 20.0,),
+                SizedBox(
+                  height: 20.0,
+                ),
                 GestureDetector(
-                  onTap: ()=>{
-                    Navigator.pushNamed(context, '/login')
-                  },
-                  child: Text("Already a user: Log in", style: redirectTextStyle,),
+                  onTap: () =>
+                      {Navigator.pushReplacementNamed(context, '/sign')},
+                  child: Text(
+                    "New User: Register",
+                    style: redirectTextStyle,
+                  ),
                 ),
               ],
             ),
@@ -133,4 +133,3 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 }
-

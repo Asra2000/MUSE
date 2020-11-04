@@ -5,6 +5,7 @@ import './screens/search_screen.dart';
 import './screens/radio_home_screen.dart';
 import './screens/home_screen.dart';
 import './screens/signUp.dart';
+import './screens/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
@@ -40,6 +41,8 @@ class MyApp extends StatelessWidget {
         '/radio': (context) => RadioScreen(),
         '/search' :(context) => SearchScreen(),
         '/player' : (context) => PlayerScreen(),
+        '/login'  :(context) => LoginScreen(),
+        '/sign' : (context) => RegistrationScreen(),
       },
     );
   }

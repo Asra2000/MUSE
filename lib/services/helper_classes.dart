@@ -74,10 +74,10 @@ class CustomContainers extends StatelessWidget {
 
 /////////////////////////////////////////////////////////////////////////////////////
 class CardRows extends StatelessWidget {
-  final String image1Url, image2Url, text1, text2, searched; final bool isArtist;
+  final String image1Url, image2Url, text1, text2; List<String> searched;
 
   CardRows(
-      {this.image1Url, this.image2Url, this.text1, this.text2, this.searched, this.isArtist = false});
+      {this.image1Url, this.image2Url, this.text1, this.text2, this.searched});
 
   @override
   Widget build(BuildContext context) {
@@ -92,8 +92,8 @@ class CardRows extends StatelessWidget {
               imageUrl: image1Url,
               captions: text1,
               blurColor: grey,
-              searched: searched,
-              isArtist: isArtist,
+//              searched: text1.toLowerCase(),
+              isArtist: true,
             ),
           ),
         ),
@@ -105,8 +105,8 @@ class CardRows extends StatelessWidget {
               blurColor: grey,
               imageUrl: image2Url,
               captions: text2,
-              searched: searched,
-              isArtist: isArtist,
+//              searched: text2.toLowerCase(),
+              isArtist: true,
             ),
           ),
         )
@@ -121,7 +121,7 @@ class SongCard extends StatelessWidget {
   final String text;
   final Color blurColor;
   final String captions;
-  final String searched;
+  final List<String> searched;
   final bool isArtist;
 
   SongCard(
@@ -136,13 +136,18 @@ class SongCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        print("here");
-        NetworkHelper net =  isArtist ? NetworkHelper(
+        print(isArtist);var temp;
+        if(isArtist){
+        NetworkHelper net =  NetworkHelper(
             url:
-                "https://itunes.apple.com/search?term=$searched&limit=10") :
-        NetworkHelper(url: "http://api.shoutcast.com/legacy/Top500?k=qKAe6Vw5lR8EZNbn&search=$searched");
-        var temp = isArtist ? await net.getData() : await net.getTopRadio();
-        print(temp);
+                "https://itunes.apple.com/search?term=$captions&limit=10") ;
+         temp =  await net.getData();
+        }
+        else{
+          NetworkHelper net = NetworkHelper(url: "https://itunes.apple.com/search?term=${searched[0]}&limit=10");
+          temp = await net.getData();
+        }
+//        print(temp);
       },
       child: Container(
         margin: EdgeInsets.all(10.0),
@@ -195,3 +200,22 @@ class SongCard extends StatelessWidget {
 }
 
 /////////////////////////////////////////////////////////////////////////////////////
+class BtnStyle extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        gradient: LinearGradient(
+          colors: <Color>[
+            rosePink,
+            darkPink,
+          ],
+        ),
+      ),
+      padding: EdgeInsets.all(15.0),
+      child: Text('Submit', style: headingStyleW),
+    );
+  }
+}

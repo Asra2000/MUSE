@@ -167,6 +167,7 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
               FlatButton(
                 onPressed: () async {
+                  print(searched);
                   NetworkHelper net = NetworkHelper(
                       url:
                           "https://itunes.apple.com/search?term=$searched&limit=10");
