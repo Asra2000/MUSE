@@ -54,7 +54,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     );
                   },
                   child: Card(
-                    elevation: 0,
+                    elevation: 1,
                     shape: StadiumBorder(
                       side: BorderSide(
                         color: pale,
@@ -75,7 +75,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       ),
                       title: Text(result[index]['trackName']),
                       dense: false,
-                      subtitle: Text(result[index]['artistName']),
+                      subtitle: Text(result[index]['artistName'],style: TextStyle(color: blackPink),),
                       trailing: IconButton(
                         icon: Icon(
                           songs[index].liked
@@ -167,7 +167,7 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
               FlatButton(
                 onPressed: () async {
-                  print(searched);
+//                  print(searched);
                   NetworkHelper net = NetworkHelper(
                       url:
                           "https://itunes.apple.com/search?term=$searched&limit=10");
@@ -179,6 +179,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 },
                 child: Text(
                   'Search',
+                  style: topHeadingStyle,
                 ),
               ),
 

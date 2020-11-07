@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:musa/screens/playlist_screen.dart';
 import '../services/constants.dart';
 import '../services/networking.dart';
 
@@ -140,14 +141,15 @@ class SongCard extends StatelessWidget {
         if(isArtist){
         NetworkHelper net =  NetworkHelper(
             url:
-                "https://itunes.apple.com/search?term=$captions&limit=10") ;
+                "https://itunes.apple.com/search?term=$captions&limit=15") ;
          temp =  await net.getData();
         }
         else{
           NetworkHelper net = NetworkHelper(url: "https://itunes.apple.com/search?term=${searched[0]}&limit=10");
           temp = await net.getData();
         }
-//        print(temp);
+        print(temp);
+        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => PlaylistScreen(songs: temp)));
       },
       child: Container(
         margin: EdgeInsets.all(10.0),

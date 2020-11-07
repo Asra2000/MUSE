@@ -45,87 +45,89 @@ class _LoginScreenState extends State<LoginScreen> {
           Container(
             width: MediaQuery.of(context).size.width,
             margin: EdgeInsets.all(20.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  "LOGIN",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: 'KaushanScript',
-                      fontSize: 24.0),
-                ),
-                SizedBox(height: 30.0),
-                TextField(
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white70,
-                      hintText: 'Email',
-                      hintStyle: TextStyle(
-                        color: brickRed,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide.none,
-                      )),
-                  onChanged: (value) {
-                    email = value;
-                  },
-                ),
-                SizedBox(
-                  height: 40.0,
-                ),
-                TextField(
-                  keyboardType: TextInputType.visiblePassword,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white70,
-                      hintText: 'Password',
-                      hintStyle: TextStyle(
-                        color: brickRed,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide.none,
-                      )),
-                  onChanged: (value) {
-                    password = value;
-                  },
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
-                RaisedButton(
-                  onPressed: () async {
-                    try {
-                      var loggedInUser = await _auth.signInWithEmailAndPassword(
-                          email: email, password: password);
-                      if (loggedInUser != null) {
-                        Navigator.pushReplacementNamed(context, '/home');
-                      }
-                    } catch (e) {
-                      print(e);
-                    }
-                  },
-                  textColor: Colors.black,
-                  padding: const EdgeInsets.all(0.0),
-                  child: BtnStyle(),
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
-                GestureDetector(
-                  onTap: () =>
-                      {Navigator.pushReplacementNamed(context, '/sign')},
-                  child: Text(
-                    "New User: Register",
-                    style: redirectTextStyle,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "LOGIN",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: 'KaushanScript',
+                        fontSize: 24.0),
                   ),
-                ),
-              ],
+                  SizedBox(height: 30.0),
+                  TextField(
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white70,
+                        hintText: 'Email',
+                        hintStyle: TextStyle(
+                          color: brickRed,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                        )),
+                    onChanged: (value) {
+                      email = value;
+                    },
+                  ),
+                  SizedBox(
+                    height: 40.0,
+                  ),
+                  TextField(
+                    keyboardType: TextInputType.visiblePassword,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white70,
+                        hintText: 'Password',
+                        hintStyle: TextStyle(
+                          color: brickRed,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                        )),
+                    onChanged: (value) {
+                      password = value;
+                    },
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  RaisedButton(
+                    onPressed: () async {
+                      try {
+                        var loggedInUser = await _auth.signInWithEmailAndPassword(
+                            email: email, password: password);
+                        if (loggedInUser != null) {
+                          Navigator.pushReplacementNamed(context, '/home');
+                        }
+                      } catch (e) {
+                        print(e);
+                      }
+                    },
+                    textColor: Colors.black,
+                    padding: const EdgeInsets.all(0.0),
+                    child: BtnStyle(),
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  GestureDetector(
+                    onTap: () =>
+                        {Navigator.pushReplacementNamed(context, '/sign')},
+                    child: Text(
+                      "New User: Register",
+                      style: redirectTextStyle,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ]),
