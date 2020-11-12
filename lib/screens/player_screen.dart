@@ -8,6 +8,8 @@ import 'package:flutter_radio/flutter_radio.dart';
 
 
 class PlayerScreen extends StatefulWidget {
+  final String singer = "Taylor Swift";
+  final String song = "I knew u were troubled";
   final String trackUrl;
   final bool isRadio;
 
@@ -17,23 +19,36 @@ class PlayerScreen extends StatefulWidget {
   _PlayerScreenState createState() => _PlayerScreenState();
 }
 
-class _PlayerScreenState extends State<PlayerScreen> {
+class _PlayerScreenState extends State<PlayerScreen> with SingleTickerProviderStateMixin {
   MusicPlayer musicPlayer =  MusicPlayer();
   bool isRadioPlaying = false;
+
+  AnimationController _rotationController;
+  Animation<double> _animation;
 
   @override
   void initState() {
     super.initState();
+    _rotationController = AnimationController(duration: const Duration(seconds: 4), vsync: this);
     audioStart();
+  }
+
+  @override
+  void dispose() {
+    _rotationController.dispose();
+    super.dispose();
   }
 
   Future<void> audioStart() async {
     await FlutterRadio.audioStart();
     print('Audio Start OK');
   }
-
+  startRotation(){
+    _rotationController.repeat();
+  }
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -51,9 +66,18 @@ class _PlayerScreenState extends State<PlayerScreen> {
             )),
             Positioned(
               left: -MediaQuery.of(context).size.width / 2,
-              child: Image.asset('assets/disk.png',
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height),
+              child: AnimatedBuilder(
+                animation: _rotationController,
+                child: Image.asset('assets/disk.png',
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height),
+                builder: (BuildContext context, Widget _widget) {
+                  return new Transform.rotate(
+                    angle: _rotationController.value * 4.3,
+                    child: _widget,
+                  );
+                },
+              ),
             ),
             Align(
               alignment: Alignment.centerLeft,
@@ -84,11 +108,12 @@ class _PlayerScreenState extends State<PlayerScreen> {
                         ),
                         onTap: () {
                           if(widget.trackUrl != null) {
+                            startRotation();
                             if (!widget.isRadio) {
                               musicPlayer.play(MusicItem(
-                                trackName: 'Sample',
-                                albumName: 'Sample Album',
-                                artistName: 'Sample Artist',
+                                trackName: widget.song,
+                                albumName: widget.singer,
+                                artistName: '',
                                 url: widget.trackUrl,
                                 duration: Duration(seconds: 30),
                               ));
@@ -124,10 +149,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
                 margin : EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.black54,
-                  boxShadow: [BoxShadow(color: Colors.black, blurRadius: 2.0)]
+                  boxShadow: [BoxShadow(color: peach, blurRadius: 1.0)]
                 ),
-                child: IconButton(icon: Icon(Icons.arrow_back_ios,color:  lightPinkColor,), onPressed: (){
+                child: IconButton(icon: Icon(Icons.arrow_back,color: pale,), onPressed: (){
                   Navigator.pop(context);
                 },),
               ),
