@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../services/constants.dart';
 import '../services/bottomNavBar.dart';
 import '../services/helper_classes.dart';
-import '../services/networking.dart';
+import '../services/clippers.dart';
 
 class HomeScreen extends StatelessWidget {
   @override

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'dart:io';
 import 'package:flare_splash_screen/flare_splash_screen.dart';
 import './screens/player_screen.dart';
 import './screens/search_screen.dart';
@@ -10,6 +12,11 @@ import './screens/playlist_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
+  FlutterError.onError = (FlutterErrorDetails details) {
+    FlutterError.dumpErrorToConsole(details);
+    if (kReleaseMode)
+      exit(1);
+  };
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());

@@ -6,6 +6,7 @@ import '../services/songs.dart';
 import '../services/networking.dart';
 import '../services/bottomNavBar.dart';
 import 'package:flutter_radio/flutter_radio.dart';
+import '../services/database.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -19,6 +20,7 @@ class _SearchScreenState extends State<SearchScreen> {
   TextEditingController _controller = TextEditingController();
   MusicPlayer musicPlayer;
   List<Song> songs = [];
+  Database dB = new Database();
 
   Widget showResult() {
     return ListView.builder(
@@ -29,6 +31,7 @@ class _SearchScreenState extends State<SearchScreen> {
         itemBuilder: (context, index) {
           if (result[index]['kind'] == 'song')
             songs.add(Song(
+              artistImg: result[index]['artworkUrl100'],
                 songUrl:
                     "https://itunes.apple.com/lookup?id=${result[index]['trackId']}",
                 songName: result[index]['trackName'],
@@ -87,6 +90,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           setState(() {
                             songs[index].liked = !songs[index].liked;
                           });
+                          dB.addToLikedSongs(songs[index]);
                         },
                       ),
                     ),

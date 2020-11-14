@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:musa/services/database.dart';
 import '../services/constants.dart';
 import '../services/songs.dart';
 import '../services/networking.dart';
 import './player_screen.dart';
 import '../services/bottomNavBar.dart';
+import '../services/database.dart';
+import '../services/clippers.dart';
 
 class PlaylistScreen extends StatefulWidget {
   final List songs;
@@ -21,7 +24,7 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
 
   Widget showResult() {
     result = widget.songs;
-    print(result.length);
+//    print(result.length);
     return ListView.builder(
         padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10.0),
         scrollDirection: Axis.vertical,
@@ -30,6 +33,7 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
         itemBuilder: (context, index) {
           if (result[index]['kind'] == 'song') {
             songs.add(Song(
+              artistImg: result[index]['artworkUrl100'],
                 songUrl:
                 "https://itunes.apple.com/lookup?id=${result[index]['trackId']}",
                 songName: result[index]['trackName'],
@@ -46,7 +50,7 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
                     // getting the track
                     setState(() {
                       trackUrl = track;
-                      print(track);
+//                      print(track);
                     });
                     Navigator.push(
                       context,
@@ -90,6 +94,7 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
                           setState(() {
                             songs[index].liked = !songs[index].liked;
                           });
+                          Database().addToLikedSongs(songs[index]);
                         },
                       ),
                     ),
@@ -107,8 +112,16 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
         child:  Column(
           children: [
             Expanded(
-              child: Container(
-                color: blackPink,
+              child: ClipPath(
+                clipper: BackgroundClipper2(),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [peach.withOpacity(0.4), rosePink]
+                    )
+                  ),
+                ),
               ),
             ),
             Container(

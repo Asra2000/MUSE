@@ -49,6 +49,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             ),
             Container(
               width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
               margin: EdgeInsets.all(20.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

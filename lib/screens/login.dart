@@ -17,35 +17,36 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       backgroundColor: Color(0xfffff5ea),
       body: SafeArea(
-        child: Stack(children: [
-          Positioned(
-            top: -70,
-            left: -70,
-            child: Container(
-              width: 300.0,
-              height: 300.0,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color(0xff968c83),
+        child: SingleChildScrollView(
+          child: Stack(children: [
+            Positioned(
+              top: -70,
+              left: -70,
+              child: Container(
+                width: 300.0,
+                height: 300.0,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Color(0xff968c83),
+                ),
               ),
             ),
-          ),
-          Positioned(
-            top: .2 * MediaQuery.of(context).size.height,
-            left: .4 * MediaQuery.of(context).size.width,
-            child: Container(
-              width: 500,
-              height: 500,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color(0xfff7dad9),
+            Positioned(
+              top: .2 * MediaQuery.of(context).size.height,
+              left: .4 * MediaQuery.of(context).size.width,
+              child: Container(
+                width: 500,
+                height: 500,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Color(0xfff7dad9),
+                ),
               ),
             ),
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            margin: EdgeInsets.all(20.0),
-            child: SingleChildScrollView(
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              margin: EdgeInsets.all(20.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -129,8 +130,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
               ),
             ),
-          ),
-        ]),
+          ]),
+        ),
       ),
     );
   }
