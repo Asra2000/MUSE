@@ -24,7 +24,6 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
 
   Widget showResult() {
     result = widget.songs;
-//    print(result.length);
     return ListView.builder(
         padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10.0),
         scrollDirection: Axis.vertical,

@@ -10,6 +10,8 @@ import './screens/signUp.dart';
 import './screens/login.dart';
 import './screens/playlist_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import './screens/user_screen.dart';
 
 Future<void> main() async {
   FlutterError.onError = (FlutterErrorDetails details) {
@@ -23,7 +25,7 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-
+  final _currentUser =  FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -36,12 +38,12 @@ class MyApp extends StatelessWidget {
         children: [
           SplashScreen.navigate(
             name: 'assets/splash.flr',
-            next: (context) => RegistrationScreen(),
+            next: (context) => (_currentUser != null) ? HomeScreen() : RegistrationScreen(),
             startAnimation: 'enter',
             backgroundColor: Color(0xffffffff),
             until: () => Future.delayed(Duration(seconds: 6)),
           ),
-          Image.asset("assets/back.png",height: 400.0,)
+          Image.asset("assets/back.png", height: 400.0,)
         ],
       ),
       routes: {
@@ -51,7 +53,8 @@ class MyApp extends StatelessWidget {
         '/player' : (context) => PlayerScreen(),
         '/login'  :(context) => LoginScreen(),
         '/sign' : (context) => RegistrationScreen(),
-        '/playlist': (context) => PlaylistScreen(songs: null)
+        '/playlist': (context) => PlaylistScreen(songs: null),
+        '/user': (context) => UserScreen(),
       },
     );
   }

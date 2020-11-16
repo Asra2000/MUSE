@@ -179,3 +179,29 @@ class BtnStyle extends StatelessWidget {
     );
   }
 }
+//////////////////////////////////////////////////////////////////////////////////
+Widget CircleContainer({Color color = Colors.white, double size = 160}) {
+  return Container(
+    alignment: Alignment.center,
+    child: InkWell(
+      child: new Container(
+        width: size,
+        height: size,
+        padding: const EdgeInsets.all(20.0),
+        //I used some padding without fixed width and height
+        decoration: new BoxDecoration(
+          shape: BoxShape
+              .circle, // You can use like this way or like the below line
+          //                borderRadius: new BorderRadius.circular(30.0),
+          color: color,
+        ),
+        child: new Text("",
+            style: new TextStyle(
+                color: Colors.black,
+                fontSize: 30.0,
+                fontWeight: FontWeight.bold)),
+        alignment: Alignment.center,
+      ),
+    ),
+  );
+}

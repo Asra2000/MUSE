@@ -121,7 +121,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   GestureDetector(
                     onTap: () =>
-                        {Navigator.pushReplacementNamed(context, '/sign')},
+                        {
+                          Navigator.pushReplacementNamed(context, '/sign')},
                     child: Text(
                       "New User: Register",
                       style: redirectTextStyle,

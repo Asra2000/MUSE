@@ -123,7 +123,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   SizedBox(height: 20.0,),
                   GestureDetector(
                     onTap: ()=>{
-                      Navigator.pushNamed(context, '/login')
+                      Navigator.pushReplacementNamed(context, '/login')
                     },
                     child: Text("Already a user: Log in", style: redirectTextStyle,),
                   ),
