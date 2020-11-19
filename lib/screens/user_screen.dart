@@ -2,22 +2,103 @@ import 'package:flutter/material.dart';
 import '../services/constants.dart';
 import '../services/helper_classes.dart';
 import '../services/database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../services/networking.dart';
+import './player_screen.dart';
 
 class UserScreen extends StatelessWidget {
+  var _currentUser = Database().getCurrentUser();
+  Widget showResult(){
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance.collection('users').doc(_currentUser.uid).collection('liked').snapshots(),
+      builder: (context, snapshot){
+        List<Container> songCard = [];
+        if (snapshot.hasData == false) {
+          return Center(
+            child: CircularProgressIndicator(
+              backgroundColor: Colors.pink.withOpacity(0.5),
+            ),
+          );
+        }
+        final songs = snapshot.data.docs;
+        for (var song in songs){
+          final songTitle = song.data()['song'];
+          final url = song.data()['url'];
+          final artistImg = song.data()['artist_img'];
+          final artistName = song.data()['artist_name'];
+          final card =  Container(
+            color: Colors.transparent,
+              width: MediaQuery.of(context).size.width / 2,
+              height: 90.0,
+              child: GestureDetector(
+                onTap: ()async {
+                  NetworkHelper net = NetworkHelper(
+                      url:
+                      url);
+                  String track = await net.getTrack();
+                  // getting the track
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => PlayerScreen(
+                          trackUrl: track,
+                        )),
+                  );
+                },
+                child: Card(
+                  semanticContainer: true,
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  color: Colors.pink.withOpacity(0.4),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                          backgroundImage: NetworkImage(artistImg),
+                          radius: 50.0,
+                        ),
+                        Column(
+                          children: [
+                            Text(songTitle, style: songTextStyle,),
+                            Text(artistName, style: artistTextStyle,)
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0)
+                  ),
+                ),
+              )
+          );
+          songCard.add(card);
+        }
+
+        return ListView(
+          children: songCard,
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
-      floatingActionButton: FloatingActionButton(
-        splashColor: Colors.white,
-        backgroundColor: Colors.black,
-        child: Icon(
-          Icons.exit_to_app,
-          color: Colors.white,
+      floatingActionButton: Tooltip(
+        message: "Logout",
+        child: FloatingActionButton(
+          splashColor: Colors.white,
+          backgroundColor: Colors.black,
+          child: Icon(
+            Icons.exit_to_app,
+            color: Colors.white,
+          ),
+          onPressed: () {},
         ),
-        onPressed: () {},
       ),
       body: SafeArea(
         child: Stack(
@@ -38,7 +119,8 @@ class UserScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Container(
-                    height: height,
+                    height: height * .6,
+                    margin: EdgeInsets.only(top: height * 0.15),
                     child: Stack(
                       children: <Widget>[
                         FractionalTranslation(
@@ -66,7 +148,11 @@ class UserScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-
+                  Container(
+                    margin: EdgeInsets.all(10.0),
+                    height: MediaQuery.of(context).size.height * 0.5,
+                    child: showResult(),
+                  ),
                 ],
               ),
             )

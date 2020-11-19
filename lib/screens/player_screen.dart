@@ -24,7 +24,6 @@ class _PlayerScreenState extends State<PlayerScreen> with SingleTickerProviderSt
   bool isRadioPlaying = false;
 
   AnimationController _rotationController;
-  Animation<double> _animation;
 
   @override
   void initState() {

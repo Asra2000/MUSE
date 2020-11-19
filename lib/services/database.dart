@@ -4,6 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class Database{
   var _currentUser =  FirebaseAuth.instance.currentUser;
+  User getCurrentUser(){
+    return _currentUser;
+  }
   void addToLikedSongs(Song song){
     Map<String , String> songMap = {
       'artist_img': song.artistImg,

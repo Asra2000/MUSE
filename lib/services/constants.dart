@@ -52,3 +52,16 @@ TextStyle redirectTextStyle =  TextStyle(
     fontStyle: FontStyle.italic,
     color: pale
 );
+
+TextStyle artistTextStyle =  TextStyle(
+    fontSize: 15.0,
+   fontFamily: 'Pacifico',
+    color: pale
+);
+
+TextStyle songTextStyle =  TextStyle(
+    fontSize: 20.0,
+    fontFamily: 'KaushanScript',
+    fontStyle: FontStyle.italic,
+    color: Colors.white
+);
