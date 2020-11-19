@@ -106,52 +106,57 @@ class SongCard extends StatelessWidget {
           NetworkHelper net = NetworkHelper(url: "https://itunes.apple.com/search?term=${searched[0]}&limit=10");
           temp = await net.getData();
         }
-        print(temp);
+//        print(temp);
         Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => PlaylistScreen(songs: temp)));
       },
-      child: Container(
-        margin: EdgeInsets.all(10.0),
-        width: 180.0,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          image:
-              DecorationImage(image: NetworkImage(imageUrl), fit: BoxFit.cover),
-          boxShadow: [
-            BoxShadow(
-              color: blurColor,
-              offset: Offset(5.0, 5.0),
-              blurRadius: 15.0,
-            ),
-          ],
-        ),
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                text,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: 'Pacifico',
-                  fontWeight: FontWeight.w600,
-                  fontSize: 22,
-                  letterSpacing: 8,
-                  backgroundColor: blackPink.withOpacity(.2),
-                ),
+      child: InkWell(
+        hoverColor: lightPinkColor,
+        highlightColor: lightPinkColor,
+        splashColor: lightPinkColor.withOpacity(0.6),
+        child: Container(
+          margin: EdgeInsets.all(10.0),
+          width: 180.0,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            image:
+                DecorationImage(image: NetworkImage(imageUrl), fit: BoxFit.cover),
+            boxShadow: [
+              BoxShadow(
+                color: blurColor,
+                offset: Offset(5.0, 5.0),
+                blurRadius: 15.0,
               ),
-              Text(
-                captions,
-                textAlign: TextAlign.end,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: 'Pacifico',
-                  fontSize: 15.0,
-                  letterSpacing: 5,
-                  backgroundColor: blackPink.withOpacity(.2),
-                ),
-              )
             ],
+          ),
+          child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  text,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Pacifico',
+                    fontWeight: FontWeight.w600,
+                    fontSize: 22,
+                    letterSpacing: 8,
+                    backgroundColor: blackPink.withOpacity(.2),
+                  ),
+                ),
+                Text(
+                  captions,
+                  textAlign: TextAlign.end,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Pacifico',
+                    fontSize: 15.0,
+                    letterSpacing: 5,
+                    backgroundColor: blackPink.withOpacity(.2),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

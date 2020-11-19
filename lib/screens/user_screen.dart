@@ -5,6 +5,7 @@ import '../services/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../services/networking.dart';
 import './player_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class UserScreen extends StatelessWidget {
   var _currentUser = Database().getCurrentUser();
@@ -97,7 +98,15 @@ class UserScreen extends StatelessWidget {
             Icons.exit_to_app,
             color: Colors.white,
           ),
-          onPressed: () {},
+          onPressed: () async{
+            try {
+              await FirebaseAuth.instance.signOut();
+              // signed out
+            } catch (e){
+              // an error
+              print("Error occurred");
+            }
+          },
         ),
       ),
       body: SafeArea(
