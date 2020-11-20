@@ -93,41 +93,41 @@ class SongCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () async {
-        print(isArtist);var temp;
-        if(isArtist){
-        NetworkHelper net =  NetworkHelper(
-            url:
-                "https://itunes.apple.com/search?term=$captions&limit=15") ;
-         temp =  await net.getData();
-        }
-        else{
-          NetworkHelper net = NetworkHelper(url: "https://itunes.apple.com/search?term=${searched[0]}&limit=10");
-          temp = await net.getData();
-        }
-//        print(temp);
-        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => PlaylistScreen(songs: temp)));
-      },
-      child: InkWell(
-        hoverColor: lightPinkColor,
-        highlightColor: lightPinkColor,
-        splashColor: lightPinkColor.withOpacity(0.6),
-        child: Container(
-          margin: EdgeInsets.all(10.0),
-          width: 180.0,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(10.0)),
-            image:
-                DecorationImage(image: NetworkImage(imageUrl), fit: BoxFit.cover),
-            boxShadow: [
-              BoxShadow(
-                color: blurColor,
-                offset: Offset(5.0, 5.0),
-                blurRadius: 15.0,
-              ),
-            ],
+    return Container(
+      margin: EdgeInsets.all(10.0),
+      width: 180.0,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        image:
+            DecorationImage(image: NetworkImage(imageUrl), fit: BoxFit.cover),
+        boxShadow: [
+          BoxShadow(
+            color: blurColor,
+            offset: Offset(5.0, 5.0),
+            blurRadius: 15.0,
           ),
+        ],
+      ),
+      child: Material(
+        child: InkWell(
+          onTap: () async {
+            print(isArtist);var temp;
+            if(isArtist){
+              NetworkHelper net =  NetworkHelper(
+                  url:
+                  "https://itunes.apple.com/search?term=$captions&limit=15") ;
+              temp =  await net.getData();
+            }
+            else{
+              NetworkHelper net = NetworkHelper(url: "https://itunes.apple.com/search?term=${searched[0]}&limit=10");
+              temp = await net.getData();
+            }
+//        print(temp);
+            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => PlaylistScreen(songs: temp)));
+          },
+          hoverColor: lightPinkColor.withOpacity(0.3),
+          highlightColor: lightPinkColor.withOpacity(0.3),
+          splashColor: lightPinkColor.withOpacity(0.6),
           child: Center(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
