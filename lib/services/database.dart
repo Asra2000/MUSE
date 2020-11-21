@@ -17,7 +17,7 @@ class Database{
 //    print(FirebaseFirestore.instance.collection('users'));
     FirebaseFirestore.instance.collection('users').doc(_currentUser.uid).collection('liked').doc().set(songMap);
   }
-  void fetchSongs(){
-
+  void deleteSong(String songId) async{
+    await FirebaseFirestore.instance.collection('users').doc(_currentUser.uid).collection('liked').doc(songId).delete();
   }
 }

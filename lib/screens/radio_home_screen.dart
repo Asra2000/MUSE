@@ -190,7 +190,8 @@ class SongCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
+      splashColor: lightPinkColor.withOpacity(0.4),
       child: Container(
         width: 150.0,
         height: 150.0,

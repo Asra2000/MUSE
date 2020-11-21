@@ -31,25 +31,32 @@ class UserScreen extends StatelessWidget {
             color: Colors.transparent,
               width: MediaQuery.of(context).size.width / 2,
               height: 90.0,
-              child: GestureDetector(
-                onTap: ()async {
-                  NetworkHelper net = NetworkHelper(
-                      url:
-                      url);
-                  String track = await net.getTrack();
-                  // getting the track
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => PlayerScreen(
-                          trackUrl: track,
-                        )),
-                  );
-                },
-                child: Card(
-                  semanticContainer: true,
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  color: Colors.pink.withOpacity(0.4),
+              child: Card(
+                semanticContainer: true,
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                color: Colors.pink.withOpacity(0.5),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0)
+                ),
+                child: InkWell(
+                  onLongPress: (){
+                      Database().deleteSong(song.id);
+                  },
+                  splashColor: lightPinkColor.withOpacity(0.3),
+                  onTap: ()async {
+                    NetworkHelper net = NetworkHelper(
+                        url:
+                        url);
+                    String track = await net.getTrack();
+                    // getting the track
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PlayerScreen(
+                            trackUrl: track,
+                          )),
+                    );
+                  },
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Row(
@@ -66,9 +73,6 @@ class UserScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                  ),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0)
                   ),
                 ),
               )

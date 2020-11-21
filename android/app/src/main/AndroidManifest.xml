@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="musa"
+        android:label="Muse"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">
         <activity

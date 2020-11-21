@@ -29,7 +29,7 @@ class _SearchScreenState extends State<SearchScreen> {
         shrinkWrap: true,
         itemCount: result.length,
         itemBuilder: (context, index) {
-          if (result[index]['kind'] == 'song')
+          if (result[index]['kind'] == 'song' || true)
             songs.add(Song(
               artistImg: result[index]['artworkUrl100'],
                 songUrl:
@@ -37,34 +37,34 @@ class _SearchScreenState extends State<SearchScreen> {
                 songName: result[index]['trackName'],
                 artist: result[index]['artistName']));
           return (result[index]['kind'] == 'song')
-              ? GestureDetector(
-                  behavior: HitTestBehavior.translucent,
-                  onTap: () async {
-                    NetworkHelper net = NetworkHelper(
-                        url:
-                            "https://itunes.apple.com/lookup?id=${result[index]['trackId']}");
-                    String track = await net.getTrack();
-                    // getting the track
-                    setState(() {
-                      trackUrl = track;
-                    });
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => PlayerScreen(
-                                trackUrl: trackUrl,
-                              )),
-                    );
-                  },
-                  child: Card(
-                    elevation: 1,
-                    shape: StadiumBorder(
-                      side: BorderSide(
-                        color: pale,
-                        width: 1.0,
-                      ),
+              ? Card(
+                elevation: 1,
+                shape: StadiumBorder(
+                    side: BorderSide(
+                      color: pale,
+                      width: 1.0,
                     ),
-                    child: ListTile(
+                  ),
+                child: InkWell(
+                  splashColor: lightPinkColor.withOpacity(0.5),
+                  onTap: () async {
+                      NetworkHelper net = NetworkHelper(
+                          url:
+                              "https://itunes.apple.com/lookup?id=${result[index]['trackId']}");
+                      String track = await net.getTrack();
+                      // getting the track
+                      setState(() {
+                        trackUrl = track;
+                      });
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PlayerScreen(
+                                  trackUrl: trackUrl,
+                                )),
+                      );
+                    },
+                  child: ListTile(
                       leading: Container(
                         width: 48,
                         height: 100,
@@ -94,8 +94,8 @@ class _SearchScreenState extends State<SearchScreen> {
                         },
                       ),
                     ),
-                  ),
-                )
+                ),
+              )
               : Text("");
         });
   }

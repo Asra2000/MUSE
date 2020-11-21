@@ -60,7 +60,7 @@ TextStyle artistTextStyle =  TextStyle(
 );
 
 TextStyle songTextStyle =  TextStyle(
-    fontSize: 20.0,
+    fontSize: 18.0,
     fontFamily: 'KaushanScript',
     fontStyle: FontStyle.italic,
     color: Colors.white

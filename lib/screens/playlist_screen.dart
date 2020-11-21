@@ -24,83 +24,95 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
 
   Widget showResult() {
     result = widget.songs;
-    return ListView.builder(
-        padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10.0),
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemCount: result.length,
-        itemBuilder: (context, index) {
-          if (result[index]['kind'] == 'song') {
-            songs.add(Song(
-              artistImg: result[index]['artworkUrl100'],
-                songUrl:
-                "https://itunes.apple.com/lookup?id=${result[index]['trackId']}",
-                songName: result[index]['trackName'],
-                artist: result[index]['artistName']));
-          }
-          return (result[index]['kind'] == 'song')
-              ? GestureDetector(
-                  behavior: HitTestBehavior.translucent,
-                  onTap: () async {
-                    NetworkHelper net = NetworkHelper(
-                        url:
-                            "https://itunes.apple.com/lookup?id=${result[index]['trackId']}");
-                    String track = await net.getTrack();
-                    // getting the track
-                    setState(() {
-                      trackUrl = track;
+    try {
+      return ListView.builder(
+          padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10.0),
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          itemCount: result.length,
+          itemBuilder: (context, index) {
+            if (result[index]['kind'] == 'song' || true) {
+              songs.add(Song(
+                  artistImg: result[index]['artworkUrl100'],
+                  songUrl:
+                  "https://itunes.apple.com/lookup?id=${result[index]['trackId']}",
+                  songName: result[index]['trackName'],
+                  artist: result[index]['artistName']));
+            }
+            return (result[index]['kind'] == 'song')
+                ? Card(
+              elevation: 2,
+              shape: StadiumBorder(
+                side: BorderSide(
+                  color: blackPink,
+                  width: 1.5,
+                ),
+              ),
+              child: InkWell(
+                hoverColor: lightPinkColor.withOpacity(0.3),
+                highlightColor: lightPinkColor.withOpacity(0.3),
+                splashColor: lightPinkColor.withOpacity(0.6),
+                onTap: () async {
+                  NetworkHelper net = NetworkHelper(
+                      url:
+                      "https://itunes.apple.com/lookup?id=${result[index]['trackId']}");
+                  String track = await net.getTrack();
+                  // getting the track
+                  setState(() {
+                    trackUrl = track;
 //                      print(track);
-                    });
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => PlayerScreen(
-                                trackUrl: trackUrl,
-                              )),
-                    );
-                  },
-                  child: Card(
-                    elevation: 2,
-                    shape: StadiumBorder(
-                      side: BorderSide(
-                        color: blackPink,
-                        width: 1.5,
-                      ),
-                    ),
-                    child: ListTile(
-                      leading: Container(
-                        width: 48,
-                        height: 100,
-                        padding: EdgeInsets.symmetric(vertical: 5.0),
-                        alignment: Alignment.center,
-                        child: CircleAvatar(
-                          radius: 50.0,
-                          backgroundImage:
-                              NetworkImage(result[index]['artworkUrl100']),
-                        ),
-                      ),
-                      title: Text(result[index]['trackName']),
-                      dense: false,
-                      subtitle: Text(result[index]['artistName'], style: TextStyle(color: peach),),
-                      trailing: IconButton(
-                        icon: Icon(
-                          songs[index].liked
-                              ? Icons.favorite
-                              : Icons.favorite_border,
-                          color: Colors.red,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            songs[index].liked = !songs[index].liked;
-                          });
-                          Database().addToLikedSongs(songs[index]);
-                        },
+                  });
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            PlayerScreen(
+                              trackUrl: trackUrl,
+                            )),
+                  );
+                },
+                child: ListTile(
+                  leading: InkWell(
+
+                    child: Container(
+                      width: 48,
+                      height: 100,
+                      padding: EdgeInsets.symmetric(vertical: 5.0),
+                      alignment: Alignment.center,
+                      child: CircleAvatar(
+                        radius: 50.0,
+                        backgroundImage:
+                        NetworkImage(result[index]['artworkUrl100']),
                       ),
                     ),
                   ),
-                )
-              : Text("");
-        });
+                  title: Text(result[index]['trackName']),
+                  dense: false,
+                  subtitle: Text(result[index]['artistName'],
+                    style: TextStyle(color: peach),),
+                  trailing: IconButton(
+                    icon: Icon(
+                      songs[index].liked
+                          ? Icons.favorite
+                          : Icons.favorite_border,
+                      color: Colors.red,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        songs[index].liked = !songs[index].liked;
+                      });
+                      Database().addToLikedSongs(songs[index]);
+                    },
+                  ),
+                ),
+              ),
+            )
+                : Text("");
+          });
+    }
+    catch(e) {
+      return Text("Ooops looks like your not connected!");
+    }
   }
 
   @override
