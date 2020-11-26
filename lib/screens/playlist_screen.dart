@@ -68,6 +68,7 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
                         builder: (context) =>
                             PlayerScreen(
                               trackUrl: trackUrl,
+                              song: songs[index].songName, singer: songs[index].artist,
                             )),
                   );
                 },

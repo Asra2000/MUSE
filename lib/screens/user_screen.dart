@@ -9,6 +9,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class UserScreen extends StatelessWidget {
   var _currentUser = Database().getCurrentUser();
+
+
+
   Widget showResult(){
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance.collection('users').doc(_currentUser.uid).collection('liked').snapshots(),
@@ -89,28 +92,60 @@ class UserScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future<void> _showMyDialog() async {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('User alert!!'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text('You are logged out'),
+                  Text('To continue you will have to sign in again.'),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text('Continue'),
+                onPressed: () {
+                  Navigator.popUntil(context, ModalRoute.withName('/login'));
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       floatingActionButton: Tooltip(
         message: "Logout",
-        child: FloatingActionButton(
-          splashColor: Colors.white,
-          backgroundColor: Colors.black,
-          child: Icon(
-            Icons.exit_to_app,
-            color: Colors.white,
+        child: Theme(
+          data: Theme.of(context).copyWith(highlightColor: Colors.yellow),
+          child: FloatingActionButton(
+            splashColor: Colors.white,
+            backgroundColor: Colors.black,
+            child: Icon(
+              Icons.exit_to_app,
+              color: Colors.white,
+            ),
+            onPressed: () async{
+              try {
+                await FirebaseAuth.instance.signOut();
+                _showMyDialog();
+                // signed out
+              } catch (e){
+                // an error
+                print("Error occurred");
+              }
+            },
           ),
-          onPressed: () async{
-            try {
-              await FirebaseAuth.instance.signOut();
-              // signed out
-            } catch (e){
-              // an error
-              print("Error occurred");
-            }
-          },
         ),
       ),
       body: SafeArea(

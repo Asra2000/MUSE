@@ -5,22 +5,21 @@ import '../services/constants.dart';
 import 'package:music_player/music_player.dart';
 import 'package:flutter_radio/flutter_radio.dart';
 
-
-
 class PlayerScreen extends StatefulWidget {
-  final String singer = "Taylor Swift";
-  final String song = "I knew u were troubled";
+  final String singer;
+  final String song;
   final String trackUrl;
   final bool isRadio;
 
-  PlayerScreen({this.trackUrl, this.isRadio = false});
+  PlayerScreen({this.trackUrl, this.isRadio = false,this.song, this.singer});
 
   @override
   _PlayerScreenState createState() => _PlayerScreenState();
 }
 
-class _PlayerScreenState extends State<PlayerScreen> with SingleTickerProviderStateMixin {
-  MusicPlayer musicPlayer =  MusicPlayer();
+class _PlayerScreenState extends State<PlayerScreen>
+    with SingleTickerProviderStateMixin {
+  MusicPlayer musicPlayer = MusicPlayer();
   bool isRadioPlaying = false;
 
   AnimationController _rotationController;
@@ -28,7 +27,8 @@ class _PlayerScreenState extends State<PlayerScreen> with SingleTickerProviderSt
   @override
   void initState() {
     super.initState();
-    _rotationController = AnimationController(duration: const Duration(seconds: 4), vsync: this);
+    _rotationController =
+        AnimationController(duration: const Duration(seconds: 4), vsync: this);
     audioStart();
   }
 
@@ -42,12 +42,13 @@ class _PlayerScreenState extends State<PlayerScreen> with SingleTickerProviderSt
     await FlutterRadio.audioStart();
     print('Audio Start OK');
   }
-  startRotation(){
+
+  startRotation() {
     _rotationController.repeat();
   }
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -55,7 +56,7 @@ class _PlayerScreenState extends State<PlayerScreen> with SingleTickerProviderSt
           children: [
             Container(
                 decoration: BoxDecoration(
-                  image: DecorationImage(
+              image: DecorationImage(
                 image: !this.widget.isRadio
                     ? AssetImage('assets/back.jpg')
                     : AssetImage('assets/back1.jpg'),
@@ -87,52 +88,67 @@ class _PlayerScreenState extends State<PlayerScreen> with SingleTickerProviderSt
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       GestureDetector(
-                          onTap: (){},
+                          onTap: () {},
                           child: Icon(
                             Icons.skip_next,
                             size: 60.0,
                             color: Colors.white,
                           )),
-                      GestureDetector(
-                        child: Container(
-                          decoration: BoxDecoration(
+                      Container(
+                        decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            boxShadow: [BoxShadow(color: brickRed, blurRadius: 5)]
-                          ),
-                          child: Icon(
-                            Icons.play_circle_outline,
-                            size: 100.0,
-                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(color: brickRed, blurRadius: 5)
+                            ]),
+                        child: Material(
+                          child: InkWell(
+                            hoverColor: Colors.white.withOpacity(0.3),
+                            highlightColor: Colors.white.withOpacity(0.3),
+                            splashColor: Colors.white.withOpacity(0.8),
+                            onTap: () {
+                              if (widget.trackUrl != null) {
+                                startRotation();
+                                if (!widget.isRadio) {
+                                  musicPlayer.play(MusicItem(
+                                    trackName: widget.song,
+                                    albumName: widget.singer,
+                                    artistName: '',
+                                    url: widget.trackUrl,
+                                    duration: Duration(seconds: 30),
+                                  ));
+                                } else {
+//                                  print("here " + widget.trackUrl);
+                                  FlutterRadio.play(url: widget.trackUrl);
+                                }
+                              }
+                            },
+                            child: Icon(
+                              Icons.play_circle_outline,
+                              size: 100.0,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
-                        onTap: () {
-                          if(widget.trackUrl != null) {
-                            startRotation();
-                            if (!widget.isRadio) {
-                              musicPlayer.play(MusicItem(
-                                trackName: widget.song,
-                                albumName: widget.singer,
-                                artistName: '',
-                                url: widget.trackUrl,
-                                duration: Duration(seconds: 30),
-                              ));
-                            }else{
-                              print("here " +  widget.trackUrl);
-                                FlutterRadio.play(url: widget.trackUrl);
-                            }
-                          }
-                        },
                       ),
-                      GestureDetector(
-                        onTap: (){
-                          widget.isRadio ? FlutterRadio.stop() :
-                          musicPlayer.pause();
-                        },
-                          child: Icon(
-                        Icons.pause,
-                        size: 60.0,
-                        color: Colors.white,
-                      ))
+                      Material(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50.0)),
+                        child: InkWell(
+                            hoverColor: Colors.white.withOpacity(0.3),
+                            highlightColor: Colors.white.withOpacity(0.3),
+                            splashColor: Colors.white.withOpacity(0.8),
+                            onTap: () {
+                              widget.isRadio
+                                  ? FlutterRadio.stop()
+                                  : musicPlayer.pause();
+                              _rotationController.stop();
+                            },
+                            child: Icon(
+                              Icons.pause,
+                              size: 60.0,
+                              color: Colors.white,
+                            )),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -145,14 +161,19 @@ class _PlayerScreenState extends State<PlayerScreen> with SingleTickerProviderSt
             Align(
               alignment: Alignment.topLeft,
               child: Container(
-                margin : EdgeInsets.all(8.0),
+                margin: EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  boxShadow: [BoxShadow(color: peach, blurRadius: 1.0)]
+                    shape: BoxShape.circle,
+                    boxShadow: [BoxShadow(color: peach, blurRadius: 1.0)]),
+                child: IconButton(
+                  icon: Icon(
+                    Icons.arrow_back,
+                    color: pale,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
-                child: IconButton(icon: Icon(Icons.arrow_back,color: pale,), onPressed: (){
-                  Navigator.pop(context);
-                },),
               ),
             )
           ],

@@ -190,37 +190,40 @@ class SongCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      splashColor: lightPinkColor.withOpacity(0.4),
-      child: Container(
-        width: 150.0,
-        height: 150.0,
-        decoration: BoxDecoration(
-            color: lightPinkColor.withAlpha(100),
-            shape: BoxShape.circle,
-            image: logo != null
-                ? DecorationImage(image: NetworkImage(logo), fit: BoxFit.cover)
-                : null,
-            boxShadow: [
-              BoxShadow(
-                  offset: const Offset(3.0, 3.0),
-                  blurRadius: 15.0,
-                  spreadRadius: 10.0,
-                  color: Colors.white.withOpacity(0.6)),
-            ]),
-      ),
-      onTap: () async {
-        NetworkHelper net = NetworkHelper();
-        var temp = await net.track(id);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => PlayerScreen(
+    return Container(
+      child: Material(
+        shape: StadiumBorder(),
+        child: InkWell(
+          splashColor: lightPinkColor.withOpacity(0.6),
+          onTap: () async {
+            NetworkHelper net = NetworkHelper();
+            var temp = await net.track(id);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => PlayerScreen(
                     trackUrl: temp,
                     isRadio: true,
                   )),
-        );
-      },
+            );
+          },
+        ),
+      ),
+      width: 150.0,
+      height: 150.0,
+      decoration: BoxDecoration(
+          color: lightPinkColor.withAlpha(100),
+          shape: BoxShape.circle,
+          image: logo != null
+              ? DecorationImage(image: NetworkImage(logo), fit: BoxFit.cover)
+              : null,
+          boxShadow: [
+            BoxShadow(
+                offset: const Offset(3.0, 3.0),
+                blurRadius: 15.0,
+                spreadRadius: 10.0,
+                color: Colors.white.withOpacity(0.6)),
+          ]),
     );
   }
 }

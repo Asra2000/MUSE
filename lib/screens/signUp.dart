@@ -16,7 +16,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   TextEditingController _controller1 = TextEditingController();
   TextEditingController _controller2 = TextEditingController();
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

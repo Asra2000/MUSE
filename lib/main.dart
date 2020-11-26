@@ -32,8 +32,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         canvasColor: Colors.transparent
       ),
-      title: 'Flare Welcome',
-      debugShowCheckedModeBanner: true,
+      title: 'Muse',
+      debugShowCheckedModeBanner: false,
       home: Stack(
         children: [
           SplashScreen.navigate(
@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
             backgroundColor: Color(0xffffffff),
             until: () => Future.delayed(Duration(seconds: 6)),
           ),
-          Image.asset("assets/back.png", height: 400.0,)
+          Image.asset("assets/back.png", height: 540.0,)
         ],
       ),
       routes: {

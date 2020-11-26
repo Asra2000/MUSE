@@ -60,7 +60,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => PlayerScreen(
-                                  trackUrl: trackUrl,
+                                  trackUrl: trackUrl, song: songs[index].songName, singer: songs[index].artist,
                                 )),
                       );
                     },
