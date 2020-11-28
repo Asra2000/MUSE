@@ -128,13 +128,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(
                       height: 20.0,
                     ),
-                    GestureDetector(
-                      onTap: () =>
-                          {
-                            Navigator.pushReplacementNamed(context, '/sign')},
-                      child: Text(
-                        "New User: Register",
-                        style: redirectTextStyle,
+                    Material(
+                      child: InkWell(
+                        splashColor: deepBlue.withOpacity(0.6),
+                        onTap: () =>
+                            {
+                              Navigator.pushReplacementNamed(context, '/sign')},
+                        child: Text(
+                          "New User: Register",
+                          style: redirectTextStyle,
+                        ),
                       ),
                     ),
                   ],

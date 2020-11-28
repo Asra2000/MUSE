@@ -30,38 +30,58 @@ class CustomBottomNavBar extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    IconButton(
-                      icon: Icon(
-                        Icons.home,
-                        color: Colors.white,
+                    Material(
+                      borderRadius: BorderRadius.circular(4),
+                      child: IconButton(
+                        splashColor: lightPinkColor.withOpacity(0.7),
+                        splashRadius: 500,
+                        icon: Icon(
+                          Icons.home,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          Navigator.popAndPushNamed(context, '/home');
+                        },
                       ),
-                      onPressed: () {
-                        Navigator.popAndPushNamed(context, '/home');
-                      },
                     ),
-                    IconButton(
-                      icon: Icon(Icons.search, color: Colors.white),
-                      onPressed: () {
-                        Navigator.popAndPushNamed(context, '/search');
-                      },
-                    ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.radio,
-                        color: Colors.white,
+                    Material(
+                      borderRadius: BorderRadius.circular(4),
+                      child: IconButton(
+                        splashColor: lightPinkColor.withOpacity(0.7),
+                        splashRadius: 500,
+                        icon: Icon(Icons.search, color: Colors.white),
+                        onPressed: () {
+                          Navigator.popAndPushNamed(context, '/search');
+                        },
                       ),
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/radio');
-                      },
                     ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.account_circle,
-                        color: Colors.white,
+                    Material(
+                      borderRadius: BorderRadius.circular(4),
+                      child: IconButton(
+                        splashColor: lightPinkColor.withOpacity(0.7),
+                        splashRadius: 500,
+                        icon: Icon(
+                          Icons.radio,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/radio');
+                        },
                       ),
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/user');
-                      },
+                    ),
+                    Material(
+                      borderRadius: BorderRadius.circular(4),
+                      child: IconButton(
+                        splashColor: lightPinkColor.withOpacity(0.7),
+                        splashRadius: 500,
+                        icon: Icon(
+                          Icons.account_circle,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/user');
+                        },
+                      ),
                     ),
                   ],
                 ),

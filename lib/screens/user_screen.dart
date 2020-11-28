@@ -111,7 +111,7 @@ class UserScreen extends StatelessWidget {
               TextButton(
                 child: Text('Continue'),
                 onPressed: () {
-                  Navigator.popUntil(context, ModalRoute.withName('/login'));
+                  Navigator.pushReplacementNamed(context, '/login');
                 },
               ),
             ],

@@ -128,7 +128,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       child: BtnStyle(),
                     ),
                     SizedBox(height: 20.0,),
-                    GestureDetector(
+                    InkWell(
+                      splashColor: deepBlue.withOpacity(0.6),
                       onTap: ()=>{
                         Navigator.pushReplacementNamed(context, '/login')
                       },
